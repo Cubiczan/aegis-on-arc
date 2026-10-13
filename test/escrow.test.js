@@ -1,0 +1,25 @@
+const ganache=require('ganache'),{ethers}=require('ethers'),assert=require('assert'),b=require('../build.json');
+const get=n=>b[n+'.sol'][n];
+(async()=>{
+ const p=new ethers.BrowserProvider(ganache.provider({logging:{quiet:true},chain:{hardfork:'shanghai'}}));
+ const [h,agent,ver]=await Promise.all([0,1,2].map(i=>p.getSigner(i)));
+ const dep=async(n,a,s=h)=>{const c=get(n);const k=await new ethers.ContractFactory(c.abi,c.evm.bytecode.object,s).deploy(...a);await k.waitForDeployment();return k;};
+ const usdc=await dep('MockUSDC',[]);const w1=await p.getSigner(3);
+ const brk=await dep('AegisBreaker',[h.address,[h.address,w1.address]]);
+ const esc=await dep('AegisEscrow',[await usdc.getAddress(),await brk.getAddress(),ver.address,10000n]);
+ await (await usdc.mint(agent.address,1000000n)).wait();
+ await (await usdc.connect(agent).approve(await esc.getAddress(),500000n)).wait();
+ await (await esc.connect(agent).deposit(500000n)).wait();
+ assert.equal(await esc.balanceOf(agent.address),500000n);
+ const att=ethers.id('att-1');await (await esc.connect(agent).requestAttestation(att)).wait();
+ assert.equal(await esc.balanceOf(agent.address),490000n);assert.equal(await esc.verifierEarned(),10000n);
+ await assert.rejects((async()=>(await esc.connect(agent).requestAttestation(att)).wait())());console.log('ok pay-per-attestation + replay guard');
+ await (await brk.votePause('anomaly')).wait();await (await brk.connect(w1).votePauseId(0)).wait();
+ assert.equal(await brk.paused(),true);
+ await assert.rejects((async()=>(await esc.connect(agent).withdraw(1n)).wait())());await assert.rejects((async()=>(await esc.connect(ver).claimFees()).wait())());
+ await assert.rejects((async()=>(await esc.connect(agent).requestAttestation(ethers.id('att-2'))).wait())());console.log('ok breaker freezes escrow');
+ await (await brk.resume()).wait();
+ await (await esc.connect(agent).withdraw(90000n)).wait();console.log('ver',ver.address,await esc.verifier());try{await esc.connect(ver).claimFees.staticCall()}catch(e){console.log('SC',e.shortMessage,e.data)};console.log('paused',await brk.paused(),'earned',await esc.verifierEarned(),'escbal',await usdc.balanceOf(await esc.getAddress()));await (await esc.connect(ver).claimFees({gasLimit:200000})).wait();
+ assert.equal(await usdc.balanceOf(ver.address),10000n);assert.equal(await esc.balanceOf(agent.address),400000n);
+ await assert.rejects((async()=>(await esc.connect(agent).claimFees()).wait())());console.log('ok resume, withdraw, claim; ALL PASS');process.exit(0);
+})().catch(e=>{console.error('FAIL',e);process.exit(1)});

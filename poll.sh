@@ -1,0 +1,1 @@
+for i in $(seq 1 90); do r=$(curl -s -X POST https://rpc.mainnet.arc.io -H 'content-type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"eth_getBalance","params":["0xb04A3151F39f18dbeC76e175E4C52D31c3a0E990","latest"]}'); echo "$(date +%T) $r"; case "$r" in *'"0x0"'*|'') ;; *result*) echo FUNDED; node deploy-arc.js; exit;; esac; sleep 120; done; echo TIMEOUT
