@@ -1,0 +1,20 @@
+{
+  "chainId": 5042,
+  "usdc": "0x3600000000000000000000000000000000000000",
+  "deployer": "0xb04A3151F39f18dbeC76e175E4C52D31c3a0E990",
+  "txs": {
+    "deployAegisRegistry": "0x7c02a0ed30d58eb37b9e665231ee57ba08844cce76d39eb344053678524dc69d",
+    "deployAegisAnchor": "0xfbafe59fc3e58dd97dd3cd5f0e72b71e061cd055f645b2d9054e2a815e052030",
+    "deployAegisBreaker": "0xa8c73fb73cb81db2b41a14f769b6dcfb716ef0489bc5b7ea58860747cdf41042",
+    "deployAegisEscrow": "0x02e7429051add0630c43986323680fa4bb78b418205e6422369c2bf556aac91d",
+    "register": "0x0ec0aa8b2ddd9406d6a83c9b72e2b999bb0342d472cc1c8490734d4e293ec026",
+    "anchor": "0xf2a60f02b19d2a7bd929d27de2bc084457b459d6d897031a467848890a5ca05f",
+    "approve": "0xf004d27f4924712677ce3da8ab0535a2750286bb729042ed713eecc3692e9823",
+    "deposit": "0xe1a59463920f8b3020e620968ae1232e9c23dfe24a1a68ed76fc736bc9ff2bbe",
+    "payAttestation": "0x0f83be8fe9132397750a8e174cca2e4d3bd1889a7d52d15b2ad2fe470e2decda"
+  },
+  "AegisRegistry": "0x70a72b4DD75939B3798261C10E2576bcCD18cCF5",
+  "AegisAnchor": "0xd2D02D35ADB60b9b0444979197FA35916A0500a5",
+  "AegisBreaker": "0xe94ad2Fc23e5b69F640A50FA539EF31bbe93486D",
+  "AegisEscrow": "0x6233f3D8e53D91Da45a756b116a057AdEB6308ea"
+}

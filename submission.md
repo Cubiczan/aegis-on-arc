@@ -11,11 +11,11 @@ Autonomous trading agents move money with no identity, no audit trail, and no br
 - **USDC gas:** gas, fees and escrow are all denominated in USDC, so an agent's full operating cost is predictable in dollars. That is a requirement for institutional agent desks.
 
 ## Deployment (Arc mainnet, chain 5042)
-- AegisRegistry: {{REG}}
-- AegisAnchor: {{ANC}}
-- AegisBreaker: {{BRK}}
-- AegisEscrow: {{ESC}}
-- Live USDC flow transactions (approve → deposit → paid attestation): {{TXS}}
+- AegisRegistry: 0x70a72b4DD75939B3798261C10E2576bcCD18cCF5
+- AegisAnchor: 0xd2D02D35ADB60b9b0444979197FA35916A0500a5
+- AegisBreaker: 0xe94ad2Fc23e5b69F640A50FA539EF31bbe93486D
+- AegisEscrow: 0x6233f3D8e53D91Da45a756b116a057AdEB6308ea
+- Live USDC flow transactions (approve → deposit → paid attestation): approve 0xf004d27f4924712677ce3da8ab0535a2750286bb729042ed713eecc3692e9823, deposit 0xe1a59463920f8b3020e620968ae1232e9c23dfe24a1a68ed76fc736bc9ff2bbe, payAttestation 0x0f83be8fe9132397750a8e174cca2e4d3bd1889a7d52d15b2ad2fe470e2decda (full list in deployment.json)
 
 ## Links
 - Code: https://github.com/Cubiczan/aegis-on-arc
